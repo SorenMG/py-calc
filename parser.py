@@ -8,6 +8,12 @@ def isoperator(char):
 
 def parse(inputEquation):
     parsedEquation = inputEquation
+    
+    # Insert all from the right of the = sign on the left
+    if (parsedEquation.find('=') != -1):
+        splittedEq = parsedEquation.split('=')
+        parsedEquation = splittedEq[0] + '-(' + splittedEq[1] + ')'
+
     # Insert *
     # Shitty fix
     timesImmuted = 0
