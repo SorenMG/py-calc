@@ -19,13 +19,18 @@ class CalcShell(cmd.Cmd):
 
     def processInput(self, eq):
         eq = re.sub(r"\s+", "", eq)
-        return eq.split(',')
+        # Split to isolate variable
+        eq = eq.split(',')
+        # Parse the equation
+        eq[0] = parser.parse(eq[0])
+        return eq
+
         
     # Prints out commands
     def do_help(self, args):
         print(' - Solve:', self.do_solve.__doc__)
 
-    # Solve equation for x
+    # Solve equation for the given variable
     def do_solve(self, arg):
         """Solves the given equation.\n
         Definition:
@@ -33,44 +38,34 @@ class CalcShell(cmd.Cmd):
         """
         # Get variable to solve for
         argData = self.processInput(arg)
-        argData[0] = parser.parse(argData[0])
-        solvedEq = ""
         if len(argData) == 2:
-            solvedEq = solve(argData[0], Symbol(argData[1]))
+            self.printEquation(solve(argData[0], Symbol(argData[1]))[0])
         else:
-            solvedEq = solve(argData[0])
-         
-        self.printEquation(solvedEq[0])
+            self.printEquation(solve(argData[0])[0])
 
+    # Integrate equation for the given variable
     def do_integrate(self, arg):
         """Integrates the given equation.\n
         Definition:
         integrate equation, variable
         """
         argData = self.processInput(arg)
-        argData[0] = parser.parse(argData[0])
-        solvedEq = ""
         if len(argData) == 2:
-            solvedEq = integrate(argData[0], Symbol(argData[1]))
+            self.printEquation(integrate(argData[0], Symbol(argData[1])))
         else:
-            solvedEq = solve(argData[0])
-        
-        self.printEquation(solvedEq)
+            self.printEquation(solve(argData[0]))
 
+    # Find the derivative of an equation for a given variable
     def do_diff(self, arg):
-        """Finds the derivative for a given equation.\n
+        """Finds the derivative of a given equation.\n
         Definition:
         diff equation
         """
         argData = self.processInput(arg)
-        argData[0] = parser.parse(argData[0])
-        solvedEq = ""
         if len(argData) == 2:
-            solvedEq = diff(argData[0], Symbol(argData[1]))
+            self.printEquation(diff(argData[0], Symbol(argData[1])))
         else:
-            solvedEq = diff(argData[0])
-
-        self.printEquation(solvedEq)
+            self.printEquation(diff(argData[0]))
             
 
 if __name__ == '__main__':
