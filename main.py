@@ -3,10 +3,7 @@ from sympy import *
 from sympy import Symbol
 from colors import *
 import re
-
-# Integrate
-# Derivative
-# Solve
+import parser
 
 class CalcShell(cmd.Cmd):
     intro = 'If confused, type "help" before a command'
@@ -36,13 +33,14 @@ class CalcShell(cmd.Cmd):
         """
         # Get variable to solve for
         argData = self.processInput(arg)
+        argData[0] = parser.parse(argData[0])
         solvedEq = ""
         if len(argData) == 2:
             solvedEq = solve(argData[0], Symbol(argData[1]))
         else:
             solvedEq = solve(argData[0])
          
-        self.printEquation(solvedEq)
+        self.printEquation(solvedEq[0])
 
     def do_integrate(self, arg):
         """Integrates the given equation.\n
@@ -50,6 +48,7 @@ class CalcShell(cmd.Cmd):
         integrate equation, variable
         """
         argData = self.processInput(arg)
+        argData[0] = parser.parse(argData[0])
         solvedEq = ""
         if len(argData) == 2:
             solvedEq = integrate(argData[0], Symbol(argData[1]))
@@ -64,6 +63,7 @@ class CalcShell(cmd.Cmd):
         diff equation
         """
         argData = self.processInput(arg)
+        argData[0] = parser.parse(argData[0])
         solvedEq = ""
         if len(argData) == 2:
             solvedEq = diff(argData[0], Symbol(argData[1]))
