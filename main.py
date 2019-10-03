@@ -57,6 +57,20 @@ class CalcShell(cmd.Cmd):
             solvedEq = solve(argData[0])
         
         self.printEquation(solvedEq)
+
+    def do_diff(self, arg):
+        """Finds the derivative for a given equation.\n
+        Definition:
+        diff equation
+        """
+        argData = self.processInput(arg)
+        solvedEq = ""
+        if len(argData) == 2:
+            solvedEq = diff(argData[0], Symbol(argData[1]))
+        else:
+            solvedEq = diff(argData[0])
+
+        self.printEquation(solvedEq)
             
 
 if __name__ == '__main__':
