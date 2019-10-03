@@ -1,5 +1,6 @@
 import cmd, sys
 from sympy.solvers import solve
+from sympy import Symbol
 from colors import *
 import os
 
@@ -27,7 +28,17 @@ class CalcShell(cmd.Cmd):
     # Solve equation for x
     def do_solve(self, arg):
         """Solves the given equation"""
-        self.printEquation(solve(arg))
+        # Get variable to solve for
+        arg.replace(" ", "")
+        argData = arg.split(',')
+        solvedEq = ""
+        if len(argData) == 2:
+            print(argData)
+            solvedEq = solve(argData[0], Symbol(argData[1]))
+        else:
+            solvedEq = solve(argData[0])
+         
+        self.printEquation(solvedEq)
 
 if __name__ == '__main__':
     CalcShell().cmdloop()
