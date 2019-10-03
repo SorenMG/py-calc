@@ -32,3 +32,6 @@ diff EQUATION
 - Add support for infinity
 - Add support for limit
 - Add support for evaluation of equation
+
+# Contribution
+To contribute, please submit a pull request 👏
