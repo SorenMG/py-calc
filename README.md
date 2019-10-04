@@ -32,6 +32,7 @@ diff EQUATION
 - Add support for infinity
 - Add support for limit
 - Add support for evaluation of equation
+- Add support for critical points
 
 # Contribution
 To contribute, please submit a pull request 👏

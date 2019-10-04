@@ -39,9 +39,9 @@ class CalcShell(cmd.Cmd):
         # Get variable to solve for
         argData = self.processInput(arg)
         if len(argData) == 2:
-            self.printEquation(solve(argData[0], Symbol(argData[1]))[0])
+            self.printEquation(solve(argData[0], Symbol(argData[1])))
         else:
-            self.printEquation(solve(argData[0])[0])
+            self.printEquation(solve(argData[0]))
 
     # Integrate equation for the given variable
     def do_integrate(self, arg):
@@ -49,11 +49,13 @@ class CalcShell(cmd.Cmd):
         Definition:
         integrate equation, variable
         """
+
         argData = self.processInput(arg)
+        print(argData)
         if len(argData) == 2:
             self.printEquation(integrate(argData[0], Symbol(argData[1])))
         else:
-            self.printEquation(solve(argData[0]))
+            self.printEquation(integrate(argData[0]))
 
     # Find the derivative of an equation for a given variable
     def do_diff(self, arg):
