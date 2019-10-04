@@ -2,11 +2,9 @@ import cmd, sys
 from sympy import *
 from sympy import Symbol
 from colors import *
-import re
 import parser
 
 class CalcShell(cmd.Cmd):
-    intro = 'If confused, type "help" before a command'
     prompt = 'Calc >> '
     file = None
 
@@ -18,7 +16,7 @@ class CalcShell(cmd.Cmd):
         sys.stdout.write(RESET)
 
     def processInput(self, eq):
-        eq = re.sub(r"\s+", "", eq)
+        eq = eq.replace(" ", "")
         # Split to isolate variable
         eq = eq.split(',')
         # Parse the equation
@@ -29,6 +27,10 @@ class CalcShell(cmd.Cmd):
     # Prints out commands
     def do_help(self, args):
         print(' - Solve:', self.do_solve.__doc__)
+
+    # Exit shell
+    def do_exit(self, args):
+        exit()
 
     # Solve equation for the given variable
     def do_solve(self, arg):
