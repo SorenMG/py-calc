@@ -1,5 +1,5 @@
 import cmd, sys
-from sympy import *
+from sympy import solve, Derivative, init_printing, Integral, pprint
 from sympy import Symbol
 from colors import *
 import parser
@@ -7,12 +7,11 @@ import parser
 class CalcShell(cmd.Cmd):
     prompt = 'Calc >> '
     file = None
+    init_printing()
 
     def printEquation(self, eq):
         sys.stdout.write(GREEN)
-        print('\n')
-        print(eq)
-        print('\n')
+        pprint(eq)
         sys.stdout.write(RESET)
 
     def processInput(self, eq):
@@ -51,13 +50,11 @@ class CalcShell(cmd.Cmd):
         Definition:
         integrate equation, variable
         """
-
         argData = self.processInput(arg)
-        print(argData)
         if len(argData) == 2:
-            self.printEquation(integrate(argData[0], Symbol(argData[1])))
+            self.printEquation(Integral(argData[0], Symbol(argData[1])))
         else:
-            self.printEquation(integrate(argData[0]))
+            self.printEquation(Integral(argData[0]))
 
     # Find the derivative of an equation for a given variable
     def do_diff(self, arg):
@@ -67,9 +64,9 @@ class CalcShell(cmd.Cmd):
         """
         argData = self.processInput(arg)
         if len(argData) == 2:
-            self.printEquation(diff(argData[0], Symbol(argData[1])))
+            self.printEquation(Derivative(argData[0], Symbol(argData[1])))
         else:
-            self.printEquation(diff(argData[0]))
+            self.printEquation(Derivative(argData[0]))
             
 
 if __name__ == '__main__':
