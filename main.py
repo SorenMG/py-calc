@@ -45,7 +45,7 @@ class CalcShell(cmd.Cmd):
             self.printEquation(solve(argData[0]))
 
     # Integrate equation for the given variable
-    def do_integrate(self, arg):
+    def do_int(self, arg):
         """Integrates the given equation.\n
         Definition:
         integrate equation, variable
