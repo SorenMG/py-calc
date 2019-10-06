@@ -1,27 +1,29 @@
 import cmd, sys
-from sympy import solve, Derivative, init_printing, Integral, pprint
-from sympy import Symbol
+from sympy import solve, Derivative, init_printing, Integral, pprint, integrate, diff, Symbol
 from colors import *
 import parser
 
 class CalcShell(cmd.Cmd):
-    prompt = 'Calc >> '
+    prompt = '>> '
     file = None
     init_printing()
 
-    def printEquation(self, eq):
+    def parse(self, eq):
+        return parser.parse(eq)
+
+    def printEquation(self, input, answer):
         sys.stdout.write(GREEN)
-        pprint(eq)
+        print('In :')
+        pprint(input)
+        sys.stdout.write(RED)
+        print('Out:')
+        pprint(answer)
         sys.stdout.write(RESET)
 
-    def processInput(self, eq):
-        eq = eq.replace(" ", "")
-        # Split to isolate variable
-        eq = eq.split(',')
-        # Parse the equation
-        eq[0] = parser.parse(eq[0])
-        return eq
-
+    def printError(self, message):
+        sys.stdout.write(RED)
+        print('Error:', message)
+        sys.stdout.write(RESET)
         
     # Prints out commands
     def do_help(self, args):
@@ -31,43 +33,87 @@ class CalcShell(cmd.Cmd):
     def do_exit(self, args):
         exit()
 
+    def _solve(self, input):
+        parsedInput, variable = self.parse(input)
+
+        answer = None
+
+        if variable != None:
+            answer = solve(parsedInput, variable)
+        else:
+            answer = solve(parsedInput)
+
+        return parsedInput, answer
+
     # Solve equation for the given variable
-    def do_solve(self, arg):
+    def do_solve(self, input):
         """Solves the given equation.\n
         Definition:
         solve equation, variable
         """
-        # Get variable to solve for
-        argData = self.processInput(arg)
-        if len(argData) == 2:
-            self.printEquation(solve(argData[0], Symbol(argData[1])))
+        try:
+            # Parse and solve input
+            parsedInput, answer = self._solve(input)
+
+            self.printEquation(parsedInput, answer)
+        except ValueError as e:
+            self.printError(e)
+
+    def _int(self, input):
+        parsedInput, variable = self.parse(input)
+
+        prettyInput = None
+        answer = None
+
+        if variable != None:
+            prettyInput = Integral(parsedInput, variable)
+            answer = integrate(parsedInput, variable)
         else:
-            self.printEquation(solve(argData[0]))
+            prettyInput = Integral(parsedInput)
+            answer = integrate(parsedInput)
+        return prettyInput, answer
 
     # Integrate equation for the given variable
-    def do_int(self, arg):
+    def do_int(self, input):
         """Integrates the given equation.\n
         Definition:
         integrate equation, variable
         """
-        argData = self.processInput(arg)
-        if len(argData) == 2:
-            self.printEquation(Integral(argData[0], Symbol(argData[1])))
+        try:
+            # Parse and integrate input
+            parsedInput, answer = self._int(input)
+
+            self.printEquation(parsedInput, answer)
+        except ValueError as e:
+            self.printError(e)
+
+    def _diff(self, input):
+        parsedInput, variable = self.parse(input)
+
+        prettyInput = None
+        answer = None
+
+        if variable != None:
+            prettyInput = Derivative(parsedInput, variable)
+            answer = diff(parsedInput, variable)
         else:
-            self.printEquation(Integral(argData[0]))
+            prettyInput = Derivative(parsedInput)
+            answer = diff(parsedInput)
+        return prettyInput, answer
 
     # Find the derivative of an equation for a given variable
-    def do_diff(self, arg):
+    def do_diff(self, input):
         """Finds the derivative of a given equation.\n
         Definition:
         diff equation
         """
-        argData = self.processInput(arg)
-        if len(argData) == 2:
-            self.printEquation(Derivative(argData[0], Symbol(argData[1])))
-        else:
-            self.printEquation(Derivative(argData[0]))
-            
+        try:
+            # Parse and differentiate input
+            parsedInput, answer = self._diff(input)
 
+            self.printEquation(parsedInput, answer)
+        except ValueError as e:
+            self.printError(e)
+            
 if __name__ == '__main__':
     CalcShell().cmdloop()
