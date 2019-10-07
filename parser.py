@@ -17,42 +17,68 @@ transformations = (standard_transformations + (implicit_multiplication_applicati
 def _parse(equation):
     return parse_expr(equation, transformations=transformations)
 
-def parse(equation):
-    # equation = equation.replace(" ", "")
-    # Split to isolate variable
-    # equation = re.split(config['separator'] + '|' + config['integral']['start'], equation)'
-    equation = equation.split(config['separator'])
-    # Parse the equation
-    for i in range(0, len(equation)):
-        equation[i] = _parse(equation[i])
+# Gets a string as such: '{$} from {$} to {$}' and outputs the {$} as a list of parsed sympy objects
+def _parsePattern(equation, pattern, willParse):
+    # First get keywords from pattern
+    keywords = pattern.split('{$}')
 
-    # If no variable parsed, return none
-    if len(equation) != 2:
-        equation.append(None)
+    # Remove empty indekses
+    itemsDeleted = 0
+    for i in range(0, len(keywords)):
+        if keywords[i - itemsDeleted] == '':
+            del keywords[i - itemsDeleted]
+            itemsDeleted += 1
 
-    return equation
+    regexString = ""
 
-# Returns -1 if failed
+    # Strip keywords from whitespace and create regexString
+    for i in range(0, len(keywords)):
+        keywords[i] = keywords[i].replace(" ", "")
+        regexString += keywords[i]
+        if i != len(keywords) - 1:
+            regexString += '|'
+    
+    # Find variables in equation with keywords
+    variables = re.split(regexString, equation)
+
+    # Parse variables
+    if willParse:
+        for i in range(0, len(variables)):
+            variables[i] = _parse(variables[i])
+
+    return variables
+
+def parseEquation(equation):
+    separator = config['separator']
+    parsedEquation = _parsePattern(equation, '{$}' + separator + '{$}', True)
+
+    symbols = parsedEquation[0].free_symbols
+    # A variable was not specified in a equation with more than one variable
+    if len(parsedEquation) != 2 and len(symbols) > 1:
+        raise ValueError('Cannot solve a multivariable equation without a specified variable')
+    elif len(parsedEquation) == 1:
+        parsedEquation.append(symbols.pop())
+
+    return parsedEquation
+
+# Returns None if failed
 def parseDefiniteIntegral(equation):
-    keyword = config['integral']['start']
-    if equation.find(keyword) != -1:
-        # Find limit
-        limitIndex = equation.find(keyword)
-        limit = equation[limitIndex + len(keyword):]
+    startKeyword = config['integral']['start']
+    toKeyword = config['integral']['separator']
 
-        # Find limit range
-        separatorKeyword = config['integral']['separator']
-        if limit.find(separatorKeyword) == -1:
-            raise ValueError('Could not find limit to definite integral')
+    parsedEquation = _parsePattern(equation, '{$}' + startKeyword + '{$}' + toKeyword + '{$}', False)
 
-        startRange, endRange = limit.split(separatorKeyword)
+    # Parse integral
+    tempHolder = parseEquation(parsedEquation[0])
+    del parsedEquation[0]
+    
+    parsedEquation.insert(0, tempHolder[1])
+    parsedEquation.insert(0, tempHolder[0])
+    for i in range(2, len(parsedEquation)):
+        parsedEquation[i] = _parse(parsedEquation[i])
 
-        # Crop equation
-        equation = equation[:limitIndex]
+    # Not definite integral
+    if len(parsedEquation) <= 2:
+        return None
 
-        # Parse equation and its variable
-        parsedEquation, variable = parse(equation)
-
-        # Parse and return equation and limits
-        return parsedEquation, variable, _parse(startRange), _parse(endRange)
-    # return None
+    return parsedEquation

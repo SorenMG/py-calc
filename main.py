@@ -9,7 +9,7 @@ class CalcShell(cmd.Cmd):
     init_printing()
 
     def parse(self, eq):
-        return parser.parse(eq)
+        return parser.parseEquation(eq)
 
     def parseDefIntegral(self, eq):
         return parser.parseDefiniteIntegral(eq)
@@ -39,12 +39,7 @@ class CalcShell(cmd.Cmd):
     def _solve(self, input):
         parsedInput, variable = self.parse(input)
 
-        answer = None
-
-        if variable != None:
-            answer = solve(parsedInput, variable)
-        else:
-            answer = solve(parsedInput)
+        answer = solve(parsedInput, variable)
 
         return parsedInput, answer
 
@@ -66,15 +61,8 @@ class CalcShell(cmd.Cmd):
         # Try to parse as definite integral
         if (self.parseDefIntegral(input) != None):
             parsedInput, variable, startRange, endRange = self.parseDefIntegral(input)
-            symbols = parsedInput.free_symbols
 
-            if len(symbols) > 1 and variable == None:
-                raise ValueError('Specify a value to solve for when integrating with more than one variable')
-
-            # Set variable to symbol in equation
-            if variable == None:
-                variable = symbols.pop()
-
+            # Calculate answer
             answer = integrate(parsedInput, (variable, startRange, endRange))
             prettyInput = Integral(parsedInput, (variable, startRange, endRange))
             return prettyInput, answer
@@ -82,15 +70,8 @@ class CalcShell(cmd.Cmd):
         # Parse as indefinite integral
         parsedInput, variable = self.parse(input)
 
-        prettyInput = None
-        answer = None
-
-        if variable != None:
-            prettyInput = Integral(parsedInput, variable)
-            answer = integrate(parsedInput, variable)
-        else:
-            prettyInput = Integral(parsedInput)
-            answer = integrate(parsedInput)
+        prettyInput = Integral(parsedInput, variable)
+        answer = integrate(parsedInput, variable)
         return prettyInput, answer
 
     # Integrate equation for the given variable
@@ -110,15 +91,9 @@ class CalcShell(cmd.Cmd):
     def _diff(self, input):
         parsedInput, variable = self.parse(input)
 
-        prettyInput = None
-        answer = None
+        prettyInput = Derivative(parsedInput, variable)
+        answer = diff(parsedInput, variable)
 
-        if variable != None:
-            prettyInput = Derivative(parsedInput, variable)
-            answer = diff(parsedInput, variable)
-        else:
-            prettyInput = Derivative(parsedInput)
-            answer = diff(parsedInput)
         return prettyInput, answer
 
     # Find the derivative of an equation for a given variable
