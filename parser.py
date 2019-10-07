@@ -4,8 +4,12 @@ import json
 
 # Load configuration
 config = None
-with open('config.json') as f:
-    config = json.load(f)
+try:
+    with open('config.json') as f:
+        config = json.load(f)
+except json.decoder.JSONDecodeError:
+    print('Could not load JSON')
+    exit()
 
 transformations = (standard_transformations + (implicit_multiplication_application,) + (split_symbols,) + (convert_xor,) + (factorial_notation,) + (convert_equals_signs,))
 
