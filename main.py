@@ -11,6 +11,9 @@ class CalcShell(cmd.Cmd):
     def parse(self, eq):
         return parser.parse(eq)
 
+    def parseDefIntegral(self, eq):
+        return parser.parseDefiniteIntegral(eq)
+
     def printEquation(self, input, answer):
         sys.stdout.write(GREEN)
         print('In :')
@@ -60,6 +63,23 @@ class CalcShell(cmd.Cmd):
             self.printError(e)
 
     def _int(self, input):
+        # Try to parse as definite integral
+        if (self.parseDefIntegral(input) != None):
+            parsedInput, variable, startRange, endRange = self.parseDefIntegral(input)
+            symbols = parsedInput.free_symbols
+
+            if len(symbols) > 1 and variable == None:
+                raise ValueError('Specify a value to solve for when integrating with more than one variable')
+
+            # Set variable to symbol in equation
+            if variable == None:
+                variable = symbols.pop()
+
+            answer = integrate(parsedInput, (variable, startRange, endRange))
+            prettyInput = Integral(parsedInput, (variable, startRange, endRange))
+            return prettyInput, answer
+
+        # Parse as indefinite integral
         parsedInput, variable = self.parse(input)
 
         prettyInput = None
