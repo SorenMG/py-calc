@@ -1,0 +1,4 @@
+{
+    // The charactor to separate equation from variable
+    "separator": ","
+}

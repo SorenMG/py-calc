@@ -5,7 +5,7 @@ Have your own CAS-tool in your terminal!
 - Simple integration
 - Simple derivative
 - Simple solve for a variable
-- Support for trigonometric functions and pi
+- Support for trigonometric functions, pi and square root
 
 # Docs
 The commands are structured, so you type a command, then the equation and then the optional variable to solve for.
@@ -23,7 +23,6 @@ diff EQUATION
 ```
 
 # TODO
-- Add support for square root
 - Add support for definite integral
 - Add support for integrals and derivative of n'th order
 - Add support for mixed partial derivative
