@@ -56,6 +56,8 @@ def parseEquation(equation):
     # A variable was not specified in a equation with more than one variable
     if len(parsedEquation) != 2 and len(symbols) > 1:
         raise ValueError('Cannot solve a multivariable equation without a specified variable')
+    elif len(symbols) < 1:
+        raise ValueError('Cannot solve a set of numbers')
     elif len(parsedEquation) == 1:
         parsedEquation.append(symbols.pop())
 
@@ -82,3 +84,6 @@ def parseDefiniteIntegral(equation):
         return None
 
     return parsedEquation
+
+def parseEvaluation(equation):
+    parsedEquation = _parse(equation)

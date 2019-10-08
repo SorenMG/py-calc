@@ -1,5 +1,5 @@
 import cmd, sys
-from sympy import solve, Derivative, init_printing, Integral, pprint, integrate, diff, Symbol
+from sympy import solve, Derivative, init_printing, Integral, pprint, integrate, diff, Symbol, evalf
 from colors import *
 import parser
 
@@ -13,6 +13,9 @@ class CalcShell(cmd.Cmd):
 
     def parseDefIntegral(self, eq):
         return parser.parseDefiniteIntegral(eq)
+
+    def parseEval(self, eq):
+        return parser.parseEvaluation(eq)
 
     def printEquation(self, input, answer):
         sys.stdout.write(GREEN)
@@ -105,6 +108,24 @@ class CalcShell(cmd.Cmd):
         try:
             # Parse and differentiate input
             parsedInput, answer = self._diff(input)
+
+            self.printEquation(parsedInput, answer)
+        except ValueError as e:
+            self.printError(e)
+
+    def _eval(self, input):
+        parsedInput = self.parseEval(input)
+        answer = parsedInput.evalf()
+        return parsedInput, answer
+
+    def do_eval(self, input):
+        """Find the value of the given equation.\n
+        Definition:
+        eval equation
+        """
+        try:
+            # Parse and evaluate input
+            parsedInput, answer = self._eval(input)
 
             self.printEquation(parsedInput, answer)
         except ValueError as e:
