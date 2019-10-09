@@ -1,12 +1,13 @@
 # Equation Parser Module
 from sympy.parsing.sympy_parser import parse_expr, standard_transformations, implicit_multiplication_application, split_symbols, convert_xor, factorial_notation, convert_equals_signs
 import json
+import os.path
 from parse import parse
 
 # Load configuration
 config = None
 try:
-    with open('config.json') as f:
+    with open(os.path.dirname(__file__) + '/../../config.json') as f:
         config = json.load(f)
 except json.decoder.JSONDecodeError:
     print('Could not load JSON')
@@ -25,10 +26,11 @@ def __parse(input, patterns):
 
 def parseDerivative(input):
     input.strip()
+    input.replace(" ", "")
 
     patterns = [
-        '{} order {}',
-        '{}, {}',
+        '{}' + config['derivative']['order'] + '{}',
+        '{}' + config['derivative']['separator'] + '{}',
         '{}'
     ]
 
@@ -43,6 +45,7 @@ def parseDerivative(input):
 
 def parseEvaluation(input):
     input.strip()
+    input.replace(" ", "")
 
     patterns = [
         '{}'
@@ -59,11 +62,12 @@ def parseEvaluation(input):
 
 def parseIntegral(input):
     input.strip()
+    input.replace(" ", "")
 
     patterns = [
-        '{}, {} from {} to {}',
-        '{} order {}',
-        '{}, {}',
+        '{}' + config['integral']['separator'] + '{}' + config['integral']['definiteStart'] + '{}' + config['integral']['definiteSeparator'] + '{}',
+        '{}' + config['integral']['order'] + '{}',
+        '{}' + config['integral']['separator'] + '{}',
         '{}'
     ]
 
@@ -80,7 +84,7 @@ def parseSolve(input):
     input.strip()
 
     patterns = [
-        '{}, {}',
+        '{}' + config['solve']['separator'] + '{}',
         '{}'
     ]
 

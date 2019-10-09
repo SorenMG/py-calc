@@ -1,7 +1,15 @@
 {
-    "separator": ",",
+    "solve": {
+        "separator": ","
+    },
     "integral": {
-        "start": "from",
-        "separator": "to"
+        "separator": ",",
+        "definiteStart": "from",
+        "definiteSeparator": "to",
+        "order": "order"
+    },
+    "derivative": {
+        "separator": ",",
+        "order": "order"
     }
 }
