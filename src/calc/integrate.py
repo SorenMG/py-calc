@@ -4,9 +4,9 @@ from ..parser import parser
 from ..printer import printer
 
 def __integrateOrder(input, order):
-        for _ in range(0, order):
-            input = __integrate(input)
-        return input
+    for _ in range(0, order):
+        input = __integrate(input)
+    return input
 
 @fuckit
 def integrate(input):
