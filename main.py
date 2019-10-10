@@ -4,14 +4,6 @@ from src.calc import integrate, evaluation, derivative, solve
 class CalcShell(cmd.Cmd):
     prompt = '>> '
     file = None
-        
-    # Prints out commands
-    def do_help(self, args):
-        print(' - Solve:', self.do_solve.__doc__)
-
-    # Exit shell
-    def do_exit(self, args):
-        exit()
 
     # Solve equation for the given variable
     def do_solve(self, input):
