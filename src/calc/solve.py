@@ -7,4 +7,5 @@ from sympy import solve as __solve
 def solve(input):
     parsed = parser.parseSolve(input)
 
-    printer.printAnswer('Solve', __solve(*parsed))
+    for symbol in parsed[0].free_symbols:
+        printer.printAnswer('Solve for ' + str(symbol), __solve(parsed[0], symbol))
