@@ -2,35 +2,76 @@
 Have your own CAS-tool in your terminal!
 
 # Features
-- Simple integration
-- Simple derivative
-- Simple solve for a variable
+- Integration
+    - Indefinite integrals
+    - Definite integrals
+    - Partial integrals
+    - Mixed partial integrals
+    - Integral of n'th order
+- Derivatives
+    - Partial derivatives
+    - Critical values
+    - Derivative of n'th order
+- Solving in an equation
 - Support for trigonometric functions, pi and square root
-- Support for definite integrals
+- Equation evaluation
 
 # Docs
-The commands are structured, so you type a command, then the equation and then the optional variable to solve for.
+The commands are structured, so you type a command and then the equation
 
 ```
-COMMAND EQUATION, VARIABLE
+COMMAND EQUATION
 ```
 
-The commands are as follows
-
+If you want to extract as much information out of your input, type in
 ```
-solve EQUATION, VARIABLE
-integrate EQUATION
+wolf EQUATION
+```
+This will spit out everything it can find about your equation
+
+## Integral
+To find an indefinite integral simply put in
+```
+int EQUATION
+```
+And then it will find the indefinite integral among other things.
+
+To find a definite integral simply type in
+```
+int EQUATION from START to END
+```
+
+Or to find an integral of a given order
+```
+int EQUATION order ORDER
+```
+
+## Derivative
+To find the derivative and partial derivatives
+```
 diff EQUATION
 ```
 
+To find a derivative of order
+```
+diff EQUATION order ORDER
+```
+
+## Solve
+To solve for all given variables simply put int
+```
+solve EQUATION
+```
+
+## Evaluate
+To evaluate simply put in your equation
+```
+eval EQUATION
+```
+
 # TODO
-- Add support for integrals and derivative of n'th order
-- Add support for mixed partial derivative
 - Add support for linreg
-- Add support for infinity
 - Add support for limit
-- Add support for evaluation of equation
-- Add support for critical points
 
 # Contribution
 To contribute, please submit a pull request 👏
