@@ -74,6 +74,7 @@ eval EQUATION
 - Add support for limit
 - Add support for critical values in amount
 - Add support for evaluation with variables defined (randundersøgelse)
+- Add support for CMD completion
 
 # Contribution
 To contribute, please submit a pull request 👏
