@@ -16,6 +16,19 @@ def integrate(input):
     # Indefinite integral
     printer.printAnswer('Indefinite integral', __integrate(*parsed))
 
+    # Partial integrals
+    for symbol in parsed[0].free_symbols:
+        printer.printAnswer('Partial integral with regard to ' + str(symbol), __integrate(parsed[0], symbol))
+
+    # Mixed partial integral
+    if len(parsed[0].free_symbols) == 2:
+        integral = parsed[0]
+        for symbol in parsed[0].free_symbols:
+            integral = __integrate(integral, symbol)
+        
+        printer.printAnswer('Mixed partial integral, ' + str(parsed[0].free_symbols), integral)
+
+
     # Definite integral
     printer.printAnswer('Definite integral', __integrate(parsed[0], (parsed[1], parsed[2], parsed[3])))
 
