@@ -72,6 +72,8 @@ eval EQUATION
 # TODO
 - Add support for linreg
 - Add support for limit
+- Add support for critical values in amount
+- Add support for evaluation with variables defined (randundersøgelse)
 
 # Contribution
 To contribute, please submit a pull request 👏
