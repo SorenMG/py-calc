@@ -76,5 +76,12 @@ eval EQUATION
 - Add support for evaluation with variables defined (randundersøgelse)
 - Add support for CMD completion
 
+# Syntax
+FUNCTION, 
+5w..10 - find definite integral / randundersøgelse / osv.
+FUNCTION, x=10, y=5
+(3 FUNCTION - integral / derivative of order)
+
+
 # Contribution
 To contribute, please submit a pull request 👏
