@@ -4,7 +4,5 @@ from ..printer import printer
 
 @fuckit
 def eval(input):
-    parsed = parser.parseEvaluation(input)
-
     # Try to find evaluation
-    printer.printAnswer('Evaluation', parsed[0].evalf())
+    printer.printAnswer('Evaluation', input.evalf())

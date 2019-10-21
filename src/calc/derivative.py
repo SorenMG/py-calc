@@ -11,18 +11,16 @@ def __derivativeOrder(input, order, symbol):
 
 @fuckit
 def diff(input):
-    parsed = parser.parseDerivative(input)
+    symbols = input.free_symbols
 
     # Try do find derivative
     # Partial derivative
-    for symbol in parsed[0].free_symbols:
-        derivative = __diff(parsed[0], symbol)
-        printer.printAnswer('Partial derivative of ' + str(symbol), derivative)
+    if len(symbols) <= 1:
+        printer.printAnswer('Derivative', __diff(input)) 
+    else:
+        for symbol in symbols:
+            printer.printAnswer('Partial derivative with regard to ' + str(symbol), __diff(input, symbol))
 
         # Critical value
-        parsedSolve = parser.parseSolve(str(derivative) + '=0')
-        printer.printAnswer('Critical value', __solve(parsedSolve, symbol))
-
-    # Derivative of order
-    for symbol in parsed[0].free_symbols:
-        printer.printAnswer('Derivative of order ' + str(parsed[1]), __derivativeOrder(parsed[0], parsed[1], symbol))
+        # inputSolve = parser.parseSolve(str(derivative) + '=0')
+        # printer.printAnswer('Critical value', __solve(inputSolve, symbol))

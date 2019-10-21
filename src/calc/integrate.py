@@ -3,34 +3,34 @@ from sympy import integrate as __integrate
 from ..parser import parser
 from ..printer import printer
 
-def __integrateOrder(input, order):
-    for _ in range(0, order):
-        input = __integrate(input)
-    return input
-
-@fuckit
+# @fuckit
 def integrate(input):
-    parsed = parser.parseIntegral(input)
+    symbols = input.free_symbols
 
     # Try to integrate
     # Indefinite integral
-    printer.printAnswer('Indefinite integral', __integrate(*parsed))
+    if len(symbols) <= 1:
+        printer.printAnswer('Indefinite integral', __integrate(input))
+    else:
+        # Partial integrals
+        for symbol in symbols:
+            printer.printAnswer('Partial integral with regard to ' + str(symbol), __integrate(input, symbol))
 
-    # Partial integrals
-    for symbol in parsed[0].free_symbols:
-        printer.printAnswer('Partial integral with regard to ' + str(symbol), __integrate(parsed[0], symbol))
+    # Definite integral
+
 
     # Mixed partial integral
-    if len(parsed[0].free_symbols) == 2:
-        integral = parsed[0]
-        for symbol in parsed[0].free_symbols:
-            integral = __integrate(integral, symbol)
+    # if len(input[0].free_symbols) == 2:
+        # integral = input[0]
+        # for symbol in input[0].free_symbols:
+            # integral = __integrate(integral, symbol)
         
-        printer.printAnswer('Mixed partial integral, ' + str(parsed[0].free_symbols), integral)
+        # printer.printAnswer('Mixed partial integral, ' + str(input[0].free_symbols), integral)
 
 
     # Definite integral
-    printer.printAnswer('Definite integral', __integrate(parsed[0], (parsed[1], parsed[2], parsed[3])))
+    # printer.printAnswer('Definite integral', __integrate(input[0], (input[1], input[2], input[3])))
 
     # Find integral of order
-    printer.printAnswer('Integral of order ' + str(parsed[1]), __integrateOrder(parsed[0], parsed[1]))
+    # printer.printAnswer('Integral of order ' + str(input[1]), __integrateOrder(input[0], input[1]))
+
