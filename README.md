@@ -75,13 +75,12 @@ eval EQUATION
 - Add support for critical values in amount
 - Add support for evaluation with variables defined (randundersøgelse)
 - Add support for CMD completion
+- Add support for simple shell (Only parses and prints input)
 
 # Syntax
-FUNCTION, 
-5w..10 - find definite integral / randundersøgelse / osv.
-FUNCTION, x=10, y=5
+FUNCTION, 5..10 - find definite integral / randundersøgelse / osv.
+FUNCTION, x=10, y=5 
 (3 FUNCTION - integral / derivative of order)
-
 
 # Contribution
 To contribute, please submit a pull request 👏
