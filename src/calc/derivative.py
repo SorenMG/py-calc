@@ -16,11 +16,12 @@ def diff(input):
     # Try do find derivative
     # Partial derivative
     if len(symbols) <= 1:
-        printer.printAnswer('Derivative', __diff(input)) 
+        derivative = __diff(input)
+        printer.printAnswer('Derivative', derivative) 
+        printer.printAnswer('Critical value', __solve(derivative))
     else:
         for symbol in symbols:
-            printer.printAnswer('Partial derivative with regard to ' + str(symbol), __diff(input, symbol))
-
-        # Critical value
-        # inputSolve = parser.parseSolve(str(derivative) + '=0')
-        # printer.printAnswer('Critical value', __solve(inputSolve, symbol))
+            derivative = __diff(input, symbol)
+            printer.printAnswer('Partial derivative with regard to ' + str(symbol), derivative)
+            # Critical values
+            printer.printAnswer('Critical value', __solve(derivative))

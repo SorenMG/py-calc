@@ -3,8 +3,8 @@ from sympy import integrate as __integrate
 from ..parser import parser
 from ..printer import printer
 
-# @fuckit
-def integrate(input):
+@fuckit
+def integrate(input, start=0, end=0):
     symbols = input.free_symbols
 
     # Try to integrate
@@ -16,21 +16,12 @@ def integrate(input):
         for symbol in symbols:
             printer.printAnswer('Partial integral with regard to ' + str(symbol), __integrate(input, symbol))
 
-    # Definite integral
-
-
-    # Mixed partial integral
-    # if len(input[0].free_symbols) == 2:
-        # integral = input[0]
-        # for symbol in input[0].free_symbols:
-            # integral = __integrate(integral, symbol)
-        
-        # printer.printAnswer('Mixed partial integral, ' + str(input[0].free_symbols), integral)
-
+        integrated = input
+        for symbol in symbols:
+            integrated = __integrate(input, symbol)
+        printer.printAnswer('Mixed partial integral', integrated)
 
     # Definite integral
-    # printer.printAnswer('Definite integral', __integrate(input[0], (input[1], input[2], input[3])))
-
-    # Find integral of order
-    # printer.printAnswer('Integral of order ' + str(input[1]), __integrateOrder(input[0], input[1]))
-
+    # if start != 0 and end != 0:
+    for symbol in symbols:
+        printer.printAnswer('Definite integral', __integrate(input, (symbol, start, end)))
