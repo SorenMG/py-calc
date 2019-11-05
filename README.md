@@ -1,6 +1,19 @@
 # Shell calculator
 Have your own CAS-tool in your terminal!
 
+# Installation
+Install `parser, sympy and fuckit` with pip and run
+```
+python3 main.py
+```
+
+# Usage
+The calculator has a wolfram-like approach where you simply type your equation
+in the shell and it spits out all possible answers. eg.
+```
+3x^2
+```
+
 # Features
 - Integration
     - Indefinite integrals
@@ -16,71 +29,12 @@ Have your own CAS-tool in your terminal!
 - Support for trigonometric functions, pi and square root
 - Equation evaluation
 
-# Docs
-The commands are structured, so you type a command and then the equation
-
-```
-COMMAND EQUATION
-```
-
-If you want to extract as much information out of your input, type in
-```
-wolf EQUATION
-```
-This will spit out everything it can find about your equation
-
-## Integral
-To find an indefinite integral simply put in
-```
-int EQUATION
-```
-And then it will find the indefinite integral among other things.
-
-To find a definite integral simply type in
-```
-int EQUATION from START to END
-```
-
-Or to find an integral of a given order
-```
-int EQUATION order ORDER
-```
-
-## Derivative
-To find the derivative and partial derivatives
-```
-diff EQUATION
-```
-
-To find a derivative of order
-```
-diff EQUATION order ORDER
-```
-
-## Solve
-To solve for all given variables simply put int
-```
-solve EQUATION
-```
-
-## Evaluate
-To evaluate simply put in your equation
-```
-eval EQUATION
-```
-
 # TODO
 - Add support for linreg
 - Add support for limit
-- Add support for critical values in amount
 - Add support for evaluation with variables defined (randundersøgelse)
-- Add support for CMD completion
 - Add support for simple shell (Only parses and prints input)
-
-# Syntax
-FUNCTION, 5..10 - find definite integral / randundersøgelse / osv.
-FUNCTION, x=10, y=5 
-(3 FUNCTION - integral / derivative of order)
+- Add support for complex numbers
 
 # Contribution
 To contribute, please submit a pull request 👏
