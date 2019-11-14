@@ -35,6 +35,9 @@ in the shell and it spits out all possible answers. eg.
 - Add support for evaluation with variables defined (randundersøgelse)
 - Add support for simple shell (Only parses and prints input)
 - Add support for complex numbers
+- Add requirements file for pip
+- Refactor code
+- Create wrapper function for every calculation
 
 # Contribution
 To contribute, please submit a pull request 👏
