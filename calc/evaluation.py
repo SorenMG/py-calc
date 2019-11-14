@@ -1,8 +1,14 @@
-import fuckit
-from ..parser import parser
-from ..printer import printer
+"""Module for evaluating an expression"""
 
-@fuckit
-def eval(input):
-    # Try to find evaluation
-    printer.printAnswer('Evaluation', input.evalf())
+
+def evaluate(expr):
+    """
+    Evaluates a given expression
+
+    Args:
+        expr: the expression to evaluate
+
+    Returns:
+        An evaluated expression
+    """
+    return expr.evalf()

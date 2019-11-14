@@ -1,27 +1,23 @@
-import fuckit
-from ..parser import parser
-from ..printer import printer
+"""Module for finding the derivative of a given expression"""
 from sympy import diff as __diff
-from sympy import solve as __solve
 
-def __derivativeOrder(input, order, symbol):
-    for _ in range(0, order):
-        input = __diff(input, symbol)
-    return input
+# TODO
+# Normal derivative
+# Derivative of order
+# Critical points?
 
-@fuckit
-def diff(input):
-    symbols = input.free_symbols
 
-    # Try do find derivative
-    # Partial derivative
-    if len(symbols) <= 1:
-        derivative = __diff(input)
-        printer.printAnswer('Derivative', derivative) 
-        printer.printAnswer('Critical value', __solve(derivative))
-    else:
-        for symbol in symbols:
-            derivative = __diff(input, symbol)
-            printer.printAnswer('Partial derivative with regard to ' + str(symbol), derivative)
-            # Critical values
-            printer.printAnswer('Critical value', __solve(derivative))
+def derivative(expr, symbol, order=1):
+    """
+    Finds the derivative
+
+    Args:
+        expr: the expression to evaluate
+        symbol: the symbol to evaluate with respect to
+        order: order of the derivative
+
+    Returns:
+        An evaluated derivative
+
+    """
+    return __diff(expr, symbol, order)

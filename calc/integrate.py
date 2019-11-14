@@ -1,27 +1,32 @@
-import fuckit
+"""Module for evaluating the integral"""
 from sympy import integrate as __integrate
-from ..parser import parser
-from ..printer import printer
 
-@fuckit
-def integrate(input, start=0, end=0):
-    symbols = input.free_symbols
 
-    # Try to integrate
-    # Indefinite integral
-    if len(symbols) <= 1:
-        printer.printAnswer('Indefinite integral', __integrate(input))
-    else:
-        # Partial integrals
-        for symbol in symbols:
-            printer.printAnswer('Partial integral with regard to ' + str(symbol), __integrate(input, symbol))
+def indefiniteIntegral(expr, symbol):
+    """
+    Find the indefinite integral
 
-        integrated = input
-        for symbol in symbols:
-            integrated = __integrate(input, symbol)
-        printer.printAnswer('Mixed partial integral', integrated)
+    Args:
+        expr: the expression to integrate
+        symbol: the symbol to integrate with respect to
 
-    # Definite integral
-    # if start != 0 and end != 0:
-    for symbol in symbols:
-        printer.printAnswer('Definite integral', __integrate(input, (symbol, start, end)))
+    Returns:
+        The indefinite integral
+    """
+    return __integrate(expr, symbol)
+
+
+def definiteIntegral(expr, symbol, start, end):
+    """
+    Finds the definite integral
+
+    Args:
+        expr: the expression to integrate
+        symbol: the symbol to integrate with respect to
+        start: the start of the definite integral
+        end: the end of the definite integral
+
+    Returns:
+        The definite integral
+    """
+    return __integrate(expr, (symbol, start, end))
