@@ -38,6 +38,7 @@ in the shell and it spits out all possible answers. eg.
 - Add requirements file for pip
 - Refactor code
 - Create wrapper function for every calculation
+- Add taylor
 
 # Contribution
 To contribute, please submit a pull request 👏
