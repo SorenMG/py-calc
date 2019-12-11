@@ -31,14 +31,16 @@ in the shell and it spits out all possible answers. eg.
 
 # TODO
 - Add support for linreg
-- Add support for limit
 - Add support for evaluation with variables defined (randundersøgelse)
-- Add support for simple shell (Only parses and prints input)
 - Add support for complex numbers
-- Add requirements file for pip
-- Refactor code
-- Create wrapper function for every calculation
 - Add taylor
+- Triangle area calculator
+- Stokatiske opgaver
+- Eksponentialfordelt
+- Inequality plot
+- Polar coordinates
+- Plaintegraler
+
 
 # Contribution
 To contribute, please submit a pull request 👏

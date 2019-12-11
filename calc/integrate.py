@@ -1,6 +1,6 @@
 """Module for evaluating the integral"""
 from sympy import integrate as __integrate
-from parser.parser import sympify
+from parser import sympify
 
 
 def indefiniteIntegral(expr, symbol, order=1, parse=True):
@@ -44,3 +44,5 @@ def definiteIntegral(expr, symbol, start, end, parse=True):
         symbol = sympify(symbol)
 
     return __integrate(expr, (symbol, start, end))
+
+print(indefiniteIntegral("-x+y^2-2xy+x^3", "x"))
